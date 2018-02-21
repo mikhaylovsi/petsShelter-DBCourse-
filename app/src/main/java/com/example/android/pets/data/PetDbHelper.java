@@ -10,9 +10,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class PetDbHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "pets.db";
+    private static final String DATABASE_NAME = "shelter.db";
     private static final int DATABASE_VERSION = 1;
-    private final String CREATE_DATABASE_SQL = "CREATE TABLE " + PetContract.PetEntry.TABLE_NAME +
+    private final String SQL_CREATE_PETS_TABLE = "CREATE TABLE " + PetContract.PetEntry.TABLE_NAME +
             " (" + PetContract.PetEntry._ID + " INTEGER, " +
             PetContract.PetEntry.COLUMN_NAME + " TEXT NOT NULL, " +
             PetContract.PetEntry.COLUMN_BREED + " TEXT, " +
@@ -28,7 +28,7 @@ public class PetDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-        sqLiteDatabase.execSQL(CREATE_DATABASE_SQL);
+        sqLiteDatabase.execSQL(SQL_CREATE_PETS_TABLE);
 
     }
 

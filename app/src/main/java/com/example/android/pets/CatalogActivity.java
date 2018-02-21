@@ -1,16 +1,19 @@
 package com.example.android.pets;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.android.pets.data.PetContract;
 import com.example.android.pets.data.PetContract.PetEntry;
 import com.example.android.pets.data.PetDbHelper;
 
@@ -78,7 +81,7 @@ public class CatalogActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to a click on the "Insert dummy data" menu option
             case R.id.action_insert_dummy_data:
-                // Do nothing for now
+                insertPet();
                 return true;
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
@@ -86,5 +89,22 @@ public class CatalogActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void insertPet() {
+
+       PetDbHelper petDbHelper = new PetDbHelper(this);
+       SQLiteDatabase sqLiteDatabase = petDbHelper.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(PetEntry.COLUMN_NAME, "Toto");
+        contentValues.put(PetEntry.COLUMN_BREED, "Terrier");
+        contentValues.put(PetEntry.COLUMN_GENDER, PetEntry.GENDER_MALE);
+        contentValues.put(PetEntry.COLUMN_WEIGHT, 7);
+
+        long newRowId = sqLiteDatabase.insert(PetEntry.TABLE_NAME, null, contentValues);
+
+        Log.v("CatalogActivity", "New Row ID " + newRowId);
+
     }
 }
