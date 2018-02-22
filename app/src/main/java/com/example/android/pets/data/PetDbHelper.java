@@ -13,7 +13,7 @@ public class PetDbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "shelter.db";
     private static final int DATABASE_VERSION = 1;
     private final String SQL_CREATE_PETS_TABLE = "CREATE TABLE " + PetContract.PetEntry.TABLE_NAME +
-            " (" + PetContract.PetEntry._ID + " INTEGER, " +
+            " (" + PetContract.PetEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             PetContract.PetEntry.COLUMN_NAME + " TEXT NOT NULL, " +
             PetContract.PetEntry.COLUMN_BREED + " TEXT, " +
             PetContract.PetEntry.COLUMN_GENDER + " INTEGER NOT NULL, " +
@@ -28,12 +28,19 @@ public class PetDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-        sqLiteDatabase.execSQL(SQL_CREATE_PETS_TABLE);
+        try {
+            sqLiteDatabase.execSQL(SQL_CREATE_PETS_TABLE);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
+
 
     }
 }

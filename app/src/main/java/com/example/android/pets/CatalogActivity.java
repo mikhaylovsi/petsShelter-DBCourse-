@@ -91,6 +91,12 @@ public class CatalogActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        displayDatabaseInfo();
+    }
+
     private void insertPet() {
 
        PetDbHelper petDbHelper = new PetDbHelper(this);
