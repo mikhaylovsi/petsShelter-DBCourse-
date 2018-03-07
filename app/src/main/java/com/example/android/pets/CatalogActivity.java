@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.android.pets.data.PetContract;
 import com.example.android.pets.data.PetContract.PetEntry;
 import com.example.android.pets.data.PetDbHelper;
 
@@ -57,7 +56,7 @@ public class CatalogActivity extends AppCompatActivity {
 
         String[] projection = new String[]{
                 PetEntry._ID,
-                PetEntry.COLUMN_NAME,
+                PetEntry.COLUMN_PET_NAME,
                 PetEntry.COLUMN_BREED,
                 PetEntry.COLUMN_GENDER,
                 PetEntry.COLUMN_WEIGHT
@@ -72,16 +71,45 @@ public class CatalogActivity extends AppCompatActivity {
                 null,
                 null
         );
+
+        TextView displayView = (TextView) findViewById(R.id.text_view_pet);
+
         try {
-            // Display the number of rows in the Cursor (which reflects the number of rows in the
-            // pets table in the database).
-            TextView displayView = (TextView) findViewById(R.id.text_view_pet);
-            displayView.setText("Number of rows in pets database table: " + cursor.getCount());
+            displayView.setText("The pets table contains " + cursor.getCount() + " pets.\n\n");
+            displayView.append(PetEntry._ID + " - " +
+                    PetEntry.COLUMN_PET_NAME + " - " +
+                    PetEntry.COLUMN_BREED + " - " +
+                    PetEntry.COLUMN_GENDER + " - " +
+                    PetEntry.COLUMN_WEIGHT + "\n");
+
+            // Figure out the index of each column
+            int idColumnIndex = cursor.getColumnIndex(PetEntry._ID);
+            int nameColumnIndex = cursor.getColumnIndex(PetEntry.COLUMN_PET_NAME);
+            int breedColumnIndex = cursor.getColumnIndex(PetEntry.COLUMN_BREED);
+            int genderColumnIndex = cursor.getColumnIndex(PetEntry.COLUMN_GENDER);
+            int weightColumnIndex = cursor.getColumnIndex(PetEntry.COLUMN_WEIGHT);
+
+            // Iterate through all the returned rows in the cursor
+            while (cursor.moveToNext()) {
+                // Use that index to extract the String or Int value of the word
+                // at the current row the cursor is on.
+                int currentID = cursor.getInt(idColumnIndex);
+                String currentName = cursor.getString(nameColumnIndex);
+                String currentBreed = cursor.getString(breedColumnIndex);
+                String currentGender = cursor.getString(genderColumnIndex);
+                String currentWeight = cursor.getString(weightColumnIndex);
+
+                // Display the values from each column of the current row in the cursor in the TextView
+                displayView.append(("\n" + currentID + " - " +
+                        currentName + " - " + currentBreed + " - " +
+                        currentGender + " - " + currentWeight));
+            }
         } finally {
             // Always close the cursor when you're done reading from it. This releases all its
             // resources and makes it invalid.
             cursor.close();
         }
+        
     }
 
     @Override
@@ -99,6 +127,7 @@ public class CatalogActivity extends AppCompatActivity {
             // Respond to a click on the "Insert dummy data" menu option
             case R.id.action_insert_dummy_data:
                 insertPet();
+                displayDatabaseInfo();
                 return true;
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
@@ -120,7 +149,7 @@ public class CatalogActivity extends AppCompatActivity {
        SQLiteDatabase sqLiteDatabase = petDbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(PetEntry.COLUMN_NAME, "Toto");
+        contentValues.put(PetEntry.COLUMN_PET_NAME, "Toto");
         contentValues.put(PetEntry.COLUMN_BREED, "Terrier");
         contentValues.put(PetEntry.COLUMN_GENDER, PetEntry.GENDER_MALE);
         contentValues.put(PetEntry.COLUMN_WEIGHT, 7);
@@ -128,6 +157,7 @@ public class CatalogActivity extends AppCompatActivity {
         long newRowId = sqLiteDatabase.insert(PetEntry.TABLE_NAME, null, contentValues);
 
         Log.v("CatalogActivity", "New Row ID " + newRowId);
+
 
     }
 }
