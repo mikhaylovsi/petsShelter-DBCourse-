@@ -158,9 +158,11 @@ public class CatalogActivity extends AppCompatActivity {
         contentValues.put(PetEntry.COLUMN_GENDER, PetEntry.GENDER_MALE);
         contentValues.put(PetEntry.COLUMN_WEIGHT, 7);
 
-        long newRowId = sqLiteDatabase.insert(PetEntry.TABLE_NAME, null, contentValues);
+        getContentResolver().insert(PetContract.PetEntry.CONTENT_URI, contentValues);
 
-        Log.v("CatalogActivity", "New Row ID " + newRowId);
+//        long newRowId = sqLiteDatabase.insert(PetEntry.TABLE_NAME, null, contentValues);
+//
+//        Log.v("CatalogActivity", "New Row ID " + newRowId);
 
 
     }

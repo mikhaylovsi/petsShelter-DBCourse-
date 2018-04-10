@@ -152,10 +152,13 @@ public class EditorActivity extends AppCompatActivity {
         contentValues.put(PetContract.PetEntry.COLUMN_GENDER, gender);
         contentValues.put(PetContract.PetEntry.COLUMN_WEIGHT, weight);
 
-        PetDbHelper petDbHelper = new PetDbHelper(this);
-        SQLiteDatabase sqLiteDatabase = petDbHelper.getWritableDatabase();
+//        PetDbHelper petDbHelper = new PetDbHelper(this);
+//        SQLiteDatabase sqLiteDatabase = petDbHelper.getWritableDatabase();
+//
+//        long newRowId = sqLiteDatabase.insert(PetContract.PetEntry.TABLE_NAME, null, contentValues);
 
-        long newRowId = sqLiteDatabase.insert(PetContract.PetEntry.TABLE_NAME, null, contentValues);
-        Toast.makeText(getApplicationContext(), "Pet saved with ID: " + newRowId, Toast.LENGTH_SHORT).show();
+        getContentResolver().insert(PetContract.PetEntry.CONTENT_URI, contentValues);
+
+        Toast.makeText(getApplicationContext(), "Pet saved", Toast.LENGTH_SHORT).show();
     }
 }
