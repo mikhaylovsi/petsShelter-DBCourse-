@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,9 +57,9 @@ public class CatalogActivity extends AppCompatActivity {
         String[] projection = new String[]{
                 PetEntry._ID,
                 PetEntry.COLUMN_PET_NAME,
-                PetEntry.COLUMN_BREED,
-                PetEntry.COLUMN_GENDER,
-                PetEntry.COLUMN_WEIGHT
+                PetEntry.COLUMN_PET_BREED,
+                PetEntry.COLUMN_PET_GENDER,
+                PetEntry.COLUMN_PET_WEIGHT
         };
 
 
@@ -82,16 +81,16 @@ public class CatalogActivity extends AppCompatActivity {
             displayView.setText("The pets table contains " + cursor.getCount() + " pets.\n\n");
             displayView.append(PetEntry._ID + " - " +
                     PetEntry.COLUMN_PET_NAME + " - " +
-                    PetEntry.COLUMN_BREED + " - " +
-                    PetEntry.COLUMN_GENDER + " - " +
-                    PetEntry.COLUMN_WEIGHT + "\n");
+                    PetEntry.COLUMN_PET_BREED + " - " +
+                    PetEntry.COLUMN_PET_GENDER + " - " +
+                    PetEntry.COLUMN_PET_WEIGHT + "\n");
 
             // Figure out the index of each column
             int idColumnIndex = cursor.getColumnIndex(PetEntry._ID);
             int nameColumnIndex = cursor.getColumnIndex(PetEntry.COLUMN_PET_NAME);
-            int breedColumnIndex = cursor.getColumnIndex(PetEntry.COLUMN_BREED);
-            int genderColumnIndex = cursor.getColumnIndex(PetEntry.COLUMN_GENDER);
-            int weightColumnIndex = cursor.getColumnIndex(PetEntry.COLUMN_WEIGHT);
+            int breedColumnIndex = cursor.getColumnIndex(PetEntry.COLUMN_PET_BREED);
+            int genderColumnIndex = cursor.getColumnIndex(PetEntry.COLUMN_PET_GENDER);
+            int weightColumnIndex = cursor.getColumnIndex(PetEntry.COLUMN_PET_WEIGHT);
 
             // Iterate through all the returned rows in the cursor
             while (cursor.moveToNext()) {
@@ -154,9 +153,9 @@ public class CatalogActivity extends AppCompatActivity {
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(PetEntry.COLUMN_PET_NAME, "Toto");
-        contentValues.put(PetEntry.COLUMN_BREED, "Terrier");
-        contentValues.put(PetEntry.COLUMN_GENDER, PetEntry.GENDER_MALE);
-        contentValues.put(PetEntry.COLUMN_WEIGHT, 7);
+        contentValues.put(PetEntry.COLUMN_PET_BREED, "Terrier");
+        contentValues.put(PetEntry.COLUMN_PET_GENDER, PetEntry.GENDER_MALE);
+        contentValues.put(PetEntry.COLUMN_PET_WEIGHT, 7);
 
         getContentResolver().insert(PetContract.PetEntry.CONTENT_URI, contentValues);
 

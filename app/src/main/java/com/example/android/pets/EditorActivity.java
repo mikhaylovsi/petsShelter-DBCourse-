@@ -16,7 +16,6 @@
 package com.example.android.pets;
 
 import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -31,7 +30,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.android.pets.data.PetContract;
-import com.example.android.pets.data.PetDbHelper;
 
 /**
  * Allows user to create a new pet or edit an existing one.
@@ -148,9 +146,9 @@ public class EditorActivity extends AppCompatActivity {
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(PetContract.PetEntry.COLUMN_PET_NAME, name);
-        contentValues.put(PetContract.PetEntry.COLUMN_BREED, breed);
-        contentValues.put(PetContract.PetEntry.COLUMN_GENDER, gender);
-        contentValues.put(PetContract.PetEntry.COLUMN_WEIGHT, weight);
+        contentValues.put(PetContract.PetEntry.COLUMN_PET_BREED, breed);
+        contentValues.put(PetContract.PetEntry.COLUMN_PET_GENDER, gender);
+        contentValues.put(PetContract.PetEntry.COLUMN_PET_WEIGHT, weight);
 
 //        PetDbHelper petDbHelper = new PetDbHelper(this);
 //        SQLiteDatabase sqLiteDatabase = petDbHelper.getWritableDatabase();
