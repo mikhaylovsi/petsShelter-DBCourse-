@@ -226,5 +226,10 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
+        mNameEditText.setText("");
+        mBreedEditText.setText("");
+        mWeightEditText.setText(String.valueOf(""));
+        mGenderSpinner.setSelection(PetContract.PetEntry.GENDER_UNKNOWN);
+
     }
 }
